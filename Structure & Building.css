@@ -1,0 +1,266 @@
+/*
+|--------------------------------------------------------------------------
+| 1. CSS Reset and Base Styles (Mobile-First: Android/iOS Phones)
+|--------------------------------------------------------------------------
+*/
+
+* {
+    /* Ensures padding and border are included in the element's total width and height */
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+    color: #333;
+    background-color: #f4f4f9;
+}
+
+a {
+    text-decoration: none;
+    color: #007bff;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #0056b3;
+}
+
+h2,
+h3 {
+    margin-bottom: 0.4rem;
+    color: #2c3e50;
+    font-size: 1.1rem;
+    /* Global H2/H3 size reduced for smaller screens */
+}
+
+ul {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    /* Add a bit of space between lists */
+    font-size: 0.95rem;
+    /* Default list item text size reduced */
+}
+
+/*
+|--------------------------------------------------------------------------
+| 2. Navigation Bar (nav) - Mobile/Tablet/Desktop
+|--------------------------------------------------------------------------
+*/
+
+.nav {
+    background-color: #2c3e50;
+    color: white;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    /* Stacked on phones */
+    align-items: center;
+    gap: 1rem;
+}
+
+.vv h3 {
+    font-size: 1.2rem;
+    color: white;
+    margin: 0;
+}
+
+.move .a {
+    color: #ecf0f1;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ecf0f1;
+    border-radius: 4px;
+    display: block;
+    text-align: center;
+}
+
+.move .a:hover {
+    background-color: #34495e;
+    color: white;
+}
+
+/*
+|--------------------------------------------------------------------------
+| 3. Main Content Layout - Mobile (Phones: Android/iOS)
+|--------------------------------------------------------------------------
+*/
+
+#m {
+    padding: 0.5rem;
+    /* Reduced padding for phones */
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    /* Stacks all content (Image, Description, Image) vertically */
+    margin-bottom: 2rem;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.img {
+    /* Mobile-first image styles: takes full width, adaptive height */
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border-radius: 6px;
+}
+
+.description {
+    padding: 0 0.5rem;
+}
+
+.description h2 {
+    font-size: 1.05rem;
+    /* Smaller H2 size for phone readability */
+    border-left: 4px solid #3498db;
+    padding-left: 0.5rem;
+    margin-top: 1rem;
+}
+
+/*
+|--------------------------------------------------------------------------
+| 4. Responsive Design Breakpoints (Tablets, Laptops, Computers)
+|--------------------------------------------------------------------------
+*/
+
+/* --- Tablet and Smaller Laptop (Screens 600px and up) --- */
+@media (min-width: 600px) {
+
+    /* Navigation: Horizontal Layout */
+    .nav {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 1rem 3rem;
+    }
+
+    /* Main Content: 3-Column Grid Layout (Image | Description | Image) */
+    main {
+        display: grid;
+        /* Grid Ratio: 1.5fr (Img 1) | 1fr (Desc) | 1.5fr (Img 2) */
+        grid-template-columns: 1.5fr 1fr 1.5fr;
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    .img {
+        /* Set image height constraint for three-column layout */
+        height: 70vh;
+        width: 100%;
+        object-fit: cover;
+        margin-bottom: 0;
+    }
+    .img{
+        view-timeline: --subject-reveal block;
+        animation-timeline: --subject-reveal;
+
+        animation-name: appear;
+        animation-range-start: entry 20%;
+
+        animation-fill-mode: both;
+        animation-duration: 1ms;
+    }
+    @keyframes appear {
+
+         0% {
+    -webkit-transform: translateY(-600px) rotateX(-30deg) scale(0);
+            transform: translateY(-600px) rotateX(-30deg) scale(0);
+    -webkit-transform-origin: 50% 100%;
+            transform-origin: 50% 100%;
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0) rotateX(0) scale(1);
+            transform: translateY(0) rotateX(0) scale(1);
+    -webkit-transform-origin: 50% 1400px;
+            transform-origin: 50% 1400px;
+    opacity: 1;
+  }
+
+   0% {
+    -webkit-transform: translateY(-600px) rotateX(-30deg) scale(0);
+            transform: translateY(-600px) rotateX(-30deg) scale(0);
+    -webkit-transform-origin: 50% 100%;
+            transform-origin: 50% 100%;
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0) rotateX(0) scale(1);
+            transform: translateY(0) rotateX(0) scale(1);
+    -webkit-transform-origin: 50% 1400px;
+            transform-origin: 50% 1400px;
+    opacity: 1;
+  }
+        
+    }
+
+    /* Assigning the grid columns */
+    main>.img:nth-of-type(1) {
+        grid-column: 1 / 2;
+    }
+
+    /* Description: FIXED HEIGHT TO IMAGE and uses Flexbox for scrolling within */
+    main>.description {
+        grid-column: 2 / 3;
+        align-self: start;
+        box-sizing: border-box;
+
+        /* Forces height to match images */
+        height: 70vh;
+        display: flex;
+        flex-direction: column;
+
+        /* Prevents scrollbar on the main container itself */
+        overflow-y: hidden;
+        padding-right: 0.5rem;
+    }
+
+    /* UL: Fills remaining space and handles scrolling */
+    main>.description ul {
+        flex-grow: 1;
+        /* UL takes all remaining space */
+        overflow-y: auto;
+        /* Scrollbar appears ONLY on the UL */
+        margin-top: 1rem;
+        padding-right: 1rem;
+        /* Space for the scrollbar */
+    }
+
+    .description h2,
+    .description h3 {
+        flex-shrink: 0;
+    }
+
+    main>.img:nth-of-type(2) {
+        grid-column: 3 / 4;
+    }
+}
+
+/* --- Larger Laptop and Desktop Computer Screens (1024px and up) --- */
+@media (min-width: 1024px) {
+
+    /* Center the main content and make it wider */
+    #m {
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    main {
+        /* Wider images, narrower description: 2fr / 1fr / 2fr */
+        grid-template-columns: 2fr 1fr 2fr;
+        gap: 4rem;
+        padding: 2.5rem;
+    }
+
+    .vv h3 {
+        font-size: 1.5rem;
+    }
+}
